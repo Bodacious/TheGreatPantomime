@@ -1,0 +1,38 @@
+// To add separate CSS rules for different screen sizes.
+// Example use:
+//
+//    h1 {
+//      // Set a default FontSize
+//      font-size: 1.8em
+//      // Sets font size to 1.2em for mobile devices
+//      @media #{$screen-xs}{
+//        font-size: 1.2em
+//      }
+//      // Sets font size to 1.6em for larger mobile devices
+//      @media #{$screen-sm}{
+//        font-size: 1.6em
+//      }
+//    }
+//
+$small: 768px
+$medium: 992px
+$large: 1200px
+
+$screen-xs: "only screen and (min-width : 1pt)        and (max-width : #{$small  - 1px})"
+$screen-sm: "only screen and (min-width : #{$small})  and (max-width : #{$medium - 1px})"
+$screen-md: "only screen and (min-width : #{$medium}) and (max-width : #{$large  - 1px})"
+$screen-lg: "only screen and (min-width : #{$large})"
+
+// greater than xsmall...
+$screen-gt-xs: "only screen and (min-width : #{$small})"
+// greater than small...
+$screen-gt-sm: "only screen and (min-width : #{$medium})"
+// greater than medium...
+$screen-gt-md: "only screen and (min-width : #{$large})"
+
+// less than small...
+$screen-lt-sm: "only screen and (max-width : #{$small})"
+// less than medium...
+$screen-lt-md: "only screen and (max-width : #{$medium})"
+// less than large...
+$screen-lt-lg: "only screen and (max-width : #{$large})"

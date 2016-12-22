@@ -1,0 +1,22 @@
+=textWithShadow
+  text-shadow: 0 0 4pt $color-shadow-black
+
+.header
+  +textWithShadow
+  color: $color-text-white !important
+  text-align: center
+
+.header__main
+  color: inherit
+  font-size: 3rem
+  @media #{$screen-gt-sm}
+    font-size: 6rem !important
+
+.header__small
+  font-size: 1.4rem
+  color: inherit
+  display: block
+  font-size: 1rem !important
+  margin-top: 0.5rem
+  @media #{$screen-gt-sm}
+    font-size: 2rem !important
