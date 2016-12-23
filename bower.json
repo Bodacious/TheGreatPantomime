@@ -1,0 +1,22 @@
+{
+  "name": "the-great-pantomime",
+  "description": "Static homepage for my website",
+  "main": "application.js",
+  "authors": [
+    "bodacious"
+  ],
+  "license": "ISC",
+  "homepage": "https://github.com/Bodacious/TheGreatPantomime",
+  "private": true,
+  "directory": "public/vendor",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "jquery": "^3.1.1"
+  }
+}
