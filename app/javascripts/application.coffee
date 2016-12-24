@@ -1,4 +1,5 @@
-require("blocks")
+blocks = require "./blocks"
 
-testFunction = ->
-  console.log("This is a test")
+$ ->
+  testFunction = ->
+    console.log("This is a test")

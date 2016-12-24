@@ -1,44 +1,34 @@
 gulp            = require "gulp"
-# sass            = require "gulp-sass"
-# autoprefixer    = require "gulp-autoprefixer"
-# mainBowerFiles  = require "main-bower-files"
-# changed         = require "gulp-changed"
-# cssnano         = require "gulp-cssnano"
-# gulpIf          = require "gulp-if"
-# register        = require "register"
-# rename          = require "gulp-rename"
-# sassGlob        = require 'gulp-sass-glob'
-# filter          = require "gulp-filter"
-plugins         = require("gulp-load-plugins")({
+plugins         = require("gulp-load-plugins")
   DEBUG: false
   maintainScope: false
   pattern: ['gulp-*', 'gulp.*', 'main-bower-files'],
   replaceString: /\bgulp[\-.]/
-})
+
 
 # Compile SASS files
 gulp.task "styles", ->
-  cssFiles = ["app/stylesheets/application.sass"]
-  gulp.src(plugins.mainBowerFiles().concat(cssFiles))
-    .pipe(plugins.filter('*.css'))
+  cssFilter   = plugins.filter("**/*.{sass,css,scss}")
+  localFilter = plugins.filter("app/stylesheets/*.sass", restore: true)
+  sources     = plugins.mainBowerFiles().concat(["app/stylesheets/*.sass"])
+
+  gulp.src(sources)
+    .pipe(cssFilter)
+    .pipe(plugins.changed("dist/css"))
     .pipe(plugins.sassGlob())
-    .pipe(plugins.sass())
-    .pipe(plugins.autoprefixer())
-    .pipe(plugins.if(gulp.env.production, plugins.cssnano()))
+    .pipe(plugins.sass({
+      # Sass options here...
+    }).on('error', plugins.sass.logError))
+
+    # Only our own assets...
+    .pipe(localFilter)
+      .pipe(plugins.autoprefixer())
+      .pipe(localFilter.restore)
+
+    .pipe(plugins.cssnano())
     .pipe(plugins.rename({
       basename: "application"
       extname: ".css"
     }))
-    .pipe(gulp.dest("dist/css"));
-
-  # gulp.src(plugins.filter('*.css'))
-  #   .pipe(changed("dist/css"))
-  #   .pipe(sassGlob())
-  #   .pipe(sass())
-  #   .pipe(autoprefixer())
-  #   .pipe(gulpIf(gulp.env.production, cssnano()))
-  #   .pipe(rename({
-  #     basename: "application"
-  #     extname: ".css"
-  #   }))
-  #   .pipe(gulp.dest("dist/css"))
+    # Write output
+    .pipe(gulp.dest("dist/css"))
